@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import logo from '../../assets/logo.svg';
+import { useNavigate } from 'react-router-dom';
+import Button from '../../components/button';
 
 const ContainerMain = styled.div`
   margin-top: 5rem;
@@ -19,30 +21,18 @@ const Description = styled.p`
   text-align: center;
 `;
 
-const ButtonContainer = styled.button`
-  cursor: pointer;
-  width: 350px;
-  height: 44px;
-  background-color: #009AD6;
-  border: none;
-  color: #FFFFFF;
-  border-radius: 8px;
-  transition: 1s;
-
-  &:hover{
-    background-color: #0880af;
-    transform: scale(1.05);
-  }
-`;
-
 function Home() {
-  
+  const navigate = useNavigate();
+  const goDiet = () => {
+    navigate("/begin");
+  };
+
   return (
     <ContainerMain>
       <img src={logo} alt="Logo" />
       <Title>Dieta com IA</Title>
       <Description>Sua dieta personalizada com inteligência artificial 🍴</Description>
-      <ButtonContainer>Gerar dieta</ButtonContainer>
+      <Button onClick={goDiet}>Gerar dieta</Button>
     </ContainerMain>
   )
 }
