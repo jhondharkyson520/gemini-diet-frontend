@@ -71,7 +71,7 @@ function Begin() {
         navigate('/');
     };
 
-    const updateInputs = () => {
+    const cleanInputs = () => {
         setFormData({
             name: '',
             weight: '',
@@ -94,7 +94,7 @@ function Begin() {
                 <ContainerOptions>
                     <button onClick={goBack}><img src={iconBack} alt="Voltar" /></button>
                     <p>Passo 1</p>
-                    <button onClick={updateInputs}><img src={iconUpdate} alt="Atualizar" /></button>
+                    <button onClick={cleanInputs}><img src={iconUpdate} alt="Atualizar" /></button>
                 </ContainerOptions>
                 <h1>Vamos começar</h1>
             </ContainerBegin>
