@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import iconBack from '../../assets/icons/back.svg';
 import iconUpdate from '../../assets/icons/update.svg';
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Button from "../../components/button";
 import SelectComponent from "../../components/select";
+import { api } from "../../services/apiClient";
 
 const ContainerMain = styled.div`
     display: flex;
@@ -55,7 +56,9 @@ const ContainerSelect = styled.div`
 `;
 
 function Finish() {
+    const location = useLocation();
     const navigate = useNavigate();
+    const initialFormData = location.state;
     const [formData, setFormData] = useState({
             gender: '',
             level: '',
@@ -84,6 +87,20 @@ function Finish() {
             [name]: value
         }));
     }
+
+    const handleFinish = async (e: React.FormEvent) => {
+        e.preventDefault();
+        const unionData = { ...initialFormData, ...formData };
+
+        try {
+            const response = await api.post('/create', unionData);
+            console.log('Dieta criada:', response.data);
+            navigate('/result', {state: response.data});
+        } catch (error) {
+            console.error('Erro ao criar dieta:', error);
+        }
+        
+    };
 
     return(
         <ContainerMain>
@@ -122,7 +139,7 @@ function Finish() {
                     <option value="definition">Definição</option>
                 </SelectComponent>
 
-                <Button onClick={goResult}>Gerar dieta</Button>
+                <Button onClick={handleFinish}>Gerar dieta</Button>
             </ContainerSelect>
         </ContainerMain>
     )

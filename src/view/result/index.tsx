@@ -58,13 +58,13 @@ const ContainerMeals = styled.div`
     border-radius: 0.5rem;
 `;
 
-const Title = styled.p`
+const Title = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 `;
 
-const HourMeal = styled.p`
+const HourMeal = styled.div`
     display: flex;
     align-items: center;
     flex-direction: row;

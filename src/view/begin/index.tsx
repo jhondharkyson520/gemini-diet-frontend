@@ -63,8 +63,8 @@ function Begin() {
         age: ''
     });
 
-    const goFinish = () => {
-        navigate('/finish');
+    const goFinish = () => {       
+        navigate('/finish', {state: formData});
     };
 
     const goBack = () => {
@@ -86,7 +86,7 @@ function Begin() {
             ...prevState,
             [name]: value
         }));
-    }
+    };    
 
     return(
         <ContainerMain>
