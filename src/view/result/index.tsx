@@ -1,9 +1,10 @@
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import iconExport from '../../assets/icons/export.svg';
 import iconCutlery from '../../assets/icons/cutlery.svg';
 import iconClock from '../../assets/icons/clock.svg';
 import Button from '../../components/button';
+import { useDiet } from '../../context/DietContext';
 
 const ContainerMain = styled.div`
     display: flex;
@@ -76,9 +77,11 @@ const HourMeal = styled.div`
 
 function Result() {
     const navigate = useNavigate();
+    const location = useLocation();
+    const resultDiet = location.state;
     const goHome = () => {
         navigate('/');
-    };
+    };    
 
     return(
         <ContainerMain>
@@ -88,8 +91,8 @@ function Result() {
             </ContainerBegin>
 
             <ContainerInformations>
-                <h1>Jhon Mendonça</h1>
-                <p>Foco: Hipertofria</p>
+                <h1>{resultDiet.data.nome}</h1>
+                <p>Foco: {resultDiet.data.objetivo}</p>
                 
                 <h2>Refeições</h2>
             </ContainerInformations>
@@ -97,32 +100,34 @@ function Result() {
             <ContainerDiet>
                 <ContainerMeals>
                     <Title>
-                        <h3>Café da manhã</h3> 
+                        <h3>{resultDiet.data.refeicoes[0].nome}</h3> 
                         <img src={iconCutlery} alt="Talheres"/>
                     </Title>
                     <HourMeal>
                         <img src={iconClock} alt="Relógio" />
-                        <strong>Horário: 8:00</strong>
+                        <strong>Horário: {resultDiet.data.refeicoes[0].horario}</strong>
                     </HourMeal>
                     <h3>Alimentos</h3>
-                    <p>2 fatias de pão integral</p>
-                    <p>2 ovos mexidos</p>
-                    <p>1 banana</p>
-                    <p>1 copo de leite desnatado</p>
+                    <p>{resultDiet.data.refeicoes[0].alimentos[0]}</p>
+                    <p>{resultDiet.data.refeicoes[0].alimentos[1]}</p>
+                    <p>{resultDiet.data.refeicoes[0].alimentos[2]}</p>
+                    <p>{resultDiet.data.refeicoes[0].alimentos[3]}</p>
                 </ContainerMeals>
                 <br />
                 <ContainerMeals>
                     <Title>
-                        <h3>Lanche da manhã</h3> 
+                        <h3>{resultDiet.data.refeicoes[1].nome}</h3> 
                         <img src={iconCutlery} alt="Talheres"/>
                     </Title>
                     <HourMeal>
                         <img src={iconClock} alt="Relógio" />
-                        <strong>Horário: 10:00</strong>
+                        <strong>Horário: {resultDiet.data.refeicoes[1].horario}</strong>
                     </HourMeal>
                     <h3>Alimentos</h3>
-                    <p>1 iogurte grego natural</p>
-                    <p>1 scoop de whey protein</p>
+                    <p>{resultDiet.data.refeicoes[1].alimentos[0]}</p>
+                    <p>{resultDiet.data.refeicoes[1].alimentos[1]}</p>
+                    <p>{resultDiet.data.refeicoes[1].alimentos[2]}</p>
+                    <p>{resultDiet.data.refeicoes[1].alimentos[3]}</p>
                 </ContainerMeals>
                 <br />
                 <Button onClick={goHome}>Nova dieta</Button>

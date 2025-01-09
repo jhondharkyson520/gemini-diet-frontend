@@ -6,6 +6,7 @@ import { useState } from "react";
 import Button from "../../components/button";
 import SelectComponent from "../../components/select";
 import { api } from "../../services/apiClient";
+import { useDiet } from "../../context/DietContext";
 
 const ContainerMain = styled.div`
     display: flex;
@@ -56,24 +57,19 @@ const ContainerSelect = styled.div`
 `;
 
 function Finish() {
-    const location = useLocation();
-    const navigate = useNavigate();
-    const initialFormData = location.state;
-    const [formData, setFormData] = useState({
-            gender: '',
-            level: '',
-            objective: ''
-    });
+    const navigate = useNavigate();    
+    const {dietData, setDietData, clearDietData} = useDiet();
 
     const goBack = () => {
         navigate('/begin');
     };
-    const goResult = () => {
-        navigate('/result');
-    };
 
     const cleanInputs = () => {
-        setFormData({
+        setDietData({
+            name: dietData.name,
+            weight: dietData.weight,
+            height: dietData.height,
+            age: dietData.age,
             gender: '',
             level: '',
             objective: ''
@@ -82,7 +78,7 @@ function Finish() {
 
     const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const {name, value} = event.target;
-        setFormData(prevState => ({
+        setDietData(prevState => ({
             ...prevState,
             [name]: value
         }));
@@ -90,11 +86,16 @@ function Finish() {
 
     const handleFinish = async (e: React.FormEvent) => {
         e.preventDefault();
-        const unionData = { ...initialFormData, ...formData };
 
+        if(dietData.gender === '' || dietData.level === '' || dietData.objective === ''){
+            alert('Preencha todos os campos!');
+            return;
+        } 
+    
         try {
-            const response = await api.post('/create', unionData);
+            const response = await api.post('/create', dietData);
             console.log('Dieta criada:', response.data);
+            clearDietData();
             navigate('/result', {state: response.data});
         } catch (error) {
             console.error('Erro ao criar dieta:', error);
@@ -115,14 +116,14 @@ function Finish() {
             
             <ContainerSelect>
                 <p>Sexo:</p>
-                <SelectComponent name="gender" value={formData.gender} onChange={handleChange}>
+                <SelectComponent name="gender" value={dietData.gender} onChange={handleChange}>
                     <option value="" disabled>Selecione</option>
                     <option value="male">Masculino</option>
                     <option value="female">Feminino</option>
                 </SelectComponent>
 
                 <p>Selecione o nível de atividade física:</p>
-                <SelectComponent name="level" value={formData.level} onChange={handleChange}>
+                <SelectComponent name="level" value={dietData.level} onChange={handleChange}>
                     <option value="" disabled>Selecione</option>
                     <option value="sedentary">Sedentário (pouco ou nenhuma atividade física)</option>
                     <option value="mild">Levemente ativo (exercícios 1 a 3 vezes na semana)</option>
@@ -131,7 +132,7 @@ function Finish() {
                 </SelectComponent>
 
                 <p>Selecione seu objetivo:</p>
-                <SelectComponent name="objective" value={formData.objective} onChange={handleChange}>
+                <SelectComponent name="objective" value={dietData.objective} onChange={handleChange}>
                     <option value="" disabled>Selecione</option>
                     <option value="loseWeight">Emagrecer</option>
                     <option value="hypertrophy">Hipertrofia</option>

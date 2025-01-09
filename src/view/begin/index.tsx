@@ -5,6 +5,7 @@ import Button from '../../components/button';
 import { useNavigate } from 'react-router-dom';
 import InputComponent from '../../components/input';
 import { useState } from 'react';
+import { useDiet } from '../../context/DietContext';
 
 const ContainerMain = styled.div`
     display: flex;
@@ -55,34 +56,35 @@ const ContainerInputs = styled.div`
 `;
 
 function Begin() {
-    const navigate = useNavigate();    
-    const [formData, setFormData] = useState({
-        name: '',
-        weight: '',
-        height: '',
-        age: ''
-    });
+    const navigate = useNavigate(); 
+    const {dietData, setDietData} = useDiet();
 
-    const goFinish = () => {       
-        navigate('/finish', {state: formData});
+    const goFinish = () => { 
+        if(dietData.name === '' || dietData.weight === '' || dietData.height === '' || dietData.age === ''){
+            alert('Preencha todos os campos!');
+            return;
+        } 
+        navigate('/finish');
     };
-
-    const goBack = () => {
+    const goBack = () => {        
         navigate('/');
     };
 
     const cleanInputs = () => {
-        setFormData({
+        setDietData({
             name: '',
             weight: '',
             height: '',
-            age: ''
+            age: '',
+            gender: dietData.gender,
+            level: dietData.level,
+            objective: dietData.objective
         });
     };
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = event.target;
-        setFormData(prevState => ({
+        setDietData(prevState => ({
             ...prevState,
             [name]: value
         }));
@@ -101,16 +103,16 @@ function Begin() {
 
             <ContainerInputs>
                 <p>Nome:</p>
-                <InputComponent type="text" name='name' value={formData.name} onChange={handleInputChange} placeholder="Nome completo" />
+                <InputComponent type="text" name='name' value={dietData.name} onChange={handleInputChange} placeholder="Nome completo" />
 
                 <p>Seu peso atual:</p>
-                <InputComponent type="text" name='weight' value={formData.weight} onChange={handleInputChange} placeholder="Peso atual" />
+                <InputComponent type="text" name='weight' value={dietData.weight} onChange={handleInputChange} placeholder="Peso atual" />
 
                 <p>Altura:</p>
-                <InputComponent type="text" name='height' value={formData.height} onChange={handleInputChange} placeholder="Sua altura" />
+                <InputComponent type="text" name='height' value={dietData.height} onChange={handleInputChange} placeholder="Sua altura" />
 
                 <p>Idade:</p>
-                <InputComponent type="text" name='age' value={formData.age} onChange={handleInputChange} placeholder="Sua idade" />
+                <InputComponent type="text" name='age' value={dietData.age} onChange={handleInputChange} placeholder="Sua idade" />
 
                 <Button onClick={goFinish}>Avançar</Button>
             </ContainerInputs>
