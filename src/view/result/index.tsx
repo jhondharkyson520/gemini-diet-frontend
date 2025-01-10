@@ -3,8 +3,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import iconExport from '../../assets/icons/export.svg';
 import iconCutlery from '../../assets/icons/cutlery.svg';
 import iconClock from '../../assets/icons/clock.svg';
+import imgLogo from '../../assets/pdfImage/logo.png';
 import Button from '../../components/button';
-import { useDiet } from '../../context/DietContext';
+import jsPDF from 'jspdf';
 
 const ContainerMain = styled.div`
     display: flex;
@@ -57,6 +58,9 @@ const ContainerMeals = styled.div`
     background-color: #D0D0D066;
     padding: 1rem;
     border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
 `;
 
 const Title = styled.div`
@@ -79,6 +83,53 @@ function Result() {
     const navigate = useNavigate();
     const location = useLocation();
     const resultDiet = location.state;
+    
+    const exportToPdf = () => {
+        const doc = new jsPDF();
+        const resultDiet = location.state;
+        const img = new Image();
+        img.src = imgLogo;
+
+        img.onload = () => {
+            const imgWidth = 50; 
+            const imgHeight = (img.height * imgWidth) / img.width;
+            const pageWidth = doc.internal.pageSize.width;
+            const centerX = (pageWidth - imgWidth) / 2;
+            doc.addImage(img, 'PNG', centerX, 10, imgWidth, imgHeight);
+            doc.setFontSize(18);
+            doc.setFont('helvetica', 'bold');
+            doc.text("Minha Dieta", 10, 20);
+            doc.setFontSize(12);
+            doc.setFont('helvetica', 'bold');
+            doc.text(`Foco: ${resultDiet.data.objetivo}`, 20, 30);
+            doc.setFont('helvetica', 'bold');
+            doc.text("Refeições:", 20, 40);            
+            let yPosition = 50;
+
+            resultDiet.data.refeicoes.forEach((snack: any, index: number) => {
+                if (yPosition > 270) {
+                    doc.addPage();
+                    yPosition = 20;
+                }
+
+                doc.setFont('helvetica', 'bold');
+                doc.text(`${snack.nome}`, 20, yPosition);
+                yPosition += 10;
+                doc.setFont('helvetica', 'bold');
+                doc.text(`Horário: ${snack.horario}`, 20, yPosition);
+                yPosition += 10;
+
+                snack.alimentos.forEach((food: string, foodIndex: number) => {
+                    doc.setFont('helvetica', 'normal');
+                    doc.text(`- ${food}`, 20, yPosition);
+                    yPosition += 10;
+                });
+                yPosition += 10;
+            });        
+            doc.save(`dieta${resultDiet.data.nome}.pdf`);
+        };
+    };
+
     const goHome = () => {
         navigate('/');
     };    
@@ -87,7 +138,7 @@ function Result() {
         <ContainerMain>
             <ContainerBegin>                
                 <h1>Minha dieta</h1>
-                <ButtonExport>Exportar<img src={iconExport} alt="Exportar"/></ButtonExport>
+                <ButtonExport onClick={exportToPdf}>Exportar<img src={iconExport} alt="Exportar"/></ButtonExport>
             </ContainerBegin>
 
             <ContainerInformations>
@@ -98,38 +149,23 @@ function Result() {
             </ContainerInformations>
 
             <ContainerDiet>
-                <ContainerMeals>
-                    <Title>
-                        <h3>{resultDiet.data.refeicoes[0].nome}</h3> 
-                        <img src={iconCutlery} alt="Talheres"/>
-                    </Title>
-                    <HourMeal>
-                        <img src={iconClock} alt="Relógio" />
-                        <strong>Horário: {resultDiet.data.refeicoes[0].horario}</strong>
-                    </HourMeal>
-                    <h3>Alimentos</h3>
-                    <p>{resultDiet.data.refeicoes[0].alimentos[0]}</p>
-                    <p>{resultDiet.data.refeicoes[0].alimentos[1]}</p>
-                    <p>{resultDiet.data.refeicoes[0].alimentos[2]}</p>
-                    <p>{resultDiet.data.refeicoes[0].alimentos[3]}</p>
-                </ContainerMeals>
-                <br />
-                <ContainerMeals>
-                    <Title>
-                        <h3>{resultDiet.data.refeicoes[1].nome}</h3> 
-                        <img src={iconCutlery} alt="Talheres"/>
-                    </Title>
-                    <HourMeal>
-                        <img src={iconClock} alt="Relógio" />
-                        <strong>Horário: {resultDiet.data.refeicoes[1].horario}</strong>
-                    </HourMeal>
-                    <h3>Alimentos</h3>
-                    <p>{resultDiet.data.refeicoes[1].alimentos[0]}</p>
-                    <p>{resultDiet.data.refeicoes[1].alimentos[1]}</p>
-                    <p>{resultDiet.data.refeicoes[1].alimentos[2]}</p>
-                    <p>{resultDiet.data.refeicoes[1].alimentos[3]}</p>
-                </ContainerMeals>
-                <br />
+                {resultDiet.data.refeicoes.map((snack: any, index: string) => (                    
+                    <ContainerMeals key={index}>
+                        <Title>
+                            <h3>{snack.nome}</h3> 
+                            <img src={iconCutlery} alt="Talheres"/>
+                        </Title>
+                        <HourMeal>
+                            <img src={iconClock} alt="Relógio" />
+                            <strong>Horário: {snack.horario}</strong>
+                        </HourMeal>
+                        <h3>Alimentos</h3>
+                        {snack.alimentos.map((food: any, index: string) => (
+                            <p key={index}>{food}</p>
+                        ))}
+                    </ContainerMeals>                  
+                ))}
+                
                 <Button onClick={goHome}>Nova dieta</Button>
             </ContainerDiet>
 

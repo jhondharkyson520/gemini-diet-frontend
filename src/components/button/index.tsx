@@ -2,6 +2,9 @@ import { ButtonHTMLAttributes } from 'react';
 import styled from 'styled-components';
 
 const ButtonContainer = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
   width: 350px;
   height: 44px;

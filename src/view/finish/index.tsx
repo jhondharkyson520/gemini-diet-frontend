@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import iconBack from '../../assets/icons/back.svg';
 import iconUpdate from '../../assets/icons/update.svg';
 import { useLocation, useNavigate } from "react-router-dom";
@@ -56,9 +56,28 @@ const ContainerSelect = styled.div`
     }
 `;
 
+const spin = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+`;
+
+const LoadingIcon = styled.div`
+  border: 4px solid #ccc;
+  border-top: 4px solid #fff;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  animation: ${spin} 1s linear infinite;
+`;
+
 function Finish() {
     const navigate = useNavigate();    
     const {dietData, setDietData, clearDietData} = useDiet();
+    const [isLoading, setIsLoading] = useState(false);
 
     const goBack = () => {
         navigate('/begin');
@@ -90,17 +109,19 @@ function Finish() {
         if(dietData.gender === '' || dietData.level === '' || dietData.objective === ''){
             alert('Preencha todos os campos!');
             return;
-        } 
-    
+        }
+
+        setIsLoading(true);
+
         try {
             const response = await api.post('/create', dietData);
-            console.log('Dieta criada:', response.data);
             clearDietData();
             navigate('/result', {state: response.data});
         } catch (error) {
-            console.error('Erro ao criar dieta:', error);
-        }
-        
+            console.error('Erro ao criar dieta:');            
+        } finally {
+            setIsLoading(false);
+        }      
     };
 
     return(
@@ -140,7 +161,9 @@ function Finish() {
                     <option value="definition">Definição</option>
                 </SelectComponent>
 
-                <Button onClick={handleFinish}>Gerar dieta</Button>
+                <Button onClick={handleFinish} disabled={isLoading}>
+                    {isLoading ? <LoadingIcon /> : 'Gerar dieta' }
+                </Button>
             </ContainerSelect>
         </ContainerMain>
     )
