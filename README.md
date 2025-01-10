@@ -1,50 +1,106 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# 🌟 **Front-End Dieta com Gemini**
 
-Currently, two official plugins are available:
+## 📝 **Descrição**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Este projeto é o **frontend** de uma aplicação de dietas personalizadas. Ele permite que os usuários insiram seus dados e gerem planos alimentares de acordo com suas necessidades. A interface é desenvolvida com **React**, **TypeScript**, e **Vite**, e também inclui funcionalidades para gerar e exportar **PDFs** personalizados com detalhes das dietas utilizando **jsPDF**.
 
-## Expanding the ESLint configuration
+## 🚀 **Funcionalidades**
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **🔄 Geração de Dietas Personalizadas**: Criação de planos alimentares com base nas informações inseridas pelo usuário.
+- **📊 Geração de PDFs**: Permite exportar as dietas geradas como arquivos PDF formatados.
+- **⚙️ Integração com API Backend**: O frontend consome a API para obter os planos alimentares personalizados.
+- **🎨 Design Responsivo**: Utiliza **Styled Components** para criar uma interface de usuário estilosa e responsiva.
 
-- Configure the top-level `parserOptions` property like this:
+## 🛠️ **Tecnologias Utilizadas**
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+- **Frontend**:
+  - 🟢 React
+  - 🟦 TypeScript
+  - ⚡ Vite
+  - 🎨 Styled Components
+  - 📜 jsPDF (para exportar PDF)
+  - 🌐 Axios (para comunicação com a API backend)
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## 🗂️ **Estrutura do Projeto**
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+- 📂 **`src/assets`**: Contém arquivos estáticos, como ícones e imagens.
+  - **icons**: Ícones utilizados na interface.
+  - **pdfImage**: Imagem usada ao gerar o PDF.
+  - **logo.svg**: Logo do projeto.
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+- 📂 **`src/components`**: Contém os componentes reutilizáveis da aplicação.
+  - **button**: Componente para criar botões personalizados.
+  - **input**: Componente para campos de entrada de texto.
+  - **select**: Componente para campos de seleção.
+
+- 📂 **`src/context`**: Gerencia o estado global da aplicação.
+  - **DietContext.tsx**: Contexto responsável por armazenar e manipular o estado das dietas.
+
+- 📂 **`src/services`**: Contém os arquivos de comunicação com a API.
+  - **api.ts**: Arquivo com funções para chamar a API.
+  - **apiClient.ts**: Configuração de cliente para realizar as requisições HTTP.
+
+- 📂 **`src/view`**: Contém as telas da aplicação.
+  - **begin**: Tela inicial do processo de criação da dieta.
+  - **finish**: Tela de finalização, onde o usuário pode visualizar o resultado.
+  - **home**: Tela principal da aplicação.
+  - **result**: Tela de resultados com detalhes da dieta gerada.
+
+- 📂 **`src`**:
+  - **App.tsx**: Arquivo principal da aplicação.
+  - **index.css**: Arquivo de estilos globais.
+  - **main.tsx**: Arquivo de entrada que renderiza o componente principal.
+
+## ⚙️ **Instalação e Execução**
+
+1. **Clone o repositório do projeto**:
+   ```bash
+   git clone https://github.com/jhondharkyson520/DietaGeminiFrontend.git
+   ```
+
+2. **Entre na pasta do projeto**:
+   ```bash
+   cd DietaGeminiFrontend
+   ```
+
+3. **Instale as dependências**:
+   ```bash
+   npm install
+   ```
+
+4. **Execute a aplicação**:
+   ```bash
+   npm run dev
+   ```
+
+5. **Acesse a aplicação em**:  
+   `http://localhost:5173/`
+
+## 🌐 **Endpoints**
+
+A aplicação se comunica com a API backend para gerar os planos alimentares. Abaixo estão os endpoints usados pelo frontend:
+
+- **POST `/create`**: Gera um plano alimentar personalizado.
+  - **Body (JSON)**:
+    ```json
+    {
+      "name": "string",
+      "weight": "string",
+      "height": "string",
+      "age": "string",
+      "gender": "string",
+      "objective": "string",
+      "level": "string"
+    }
+    ```
+
+## 💡 **Design e Arquitetura**
+
+A aplicação foi projetada para ser simples e intuitiva, com uma navegação fácil entre as telas. A tela inicial permite ao usuário fornecer dados para a dieta, enquanto a tela de resultados mostra o plano alimentar gerado com base nas informações fornecidas.
+
+### **Context API**:
+- Utilizamos o `DietContext` para gerenciar o estado global da dieta em toda a aplicação. Isso permite que as informações da dieta sejam acessíveis em qualquer lugar da aplicação sem a necessidade de passar props manualmente.
+
+### **jsPDF**:
+- Usamos o `jsPDF` para gerar arquivos PDF com o plano alimentar personalizado. O PDF inclui detalhes como o nome do usuário, objetivo, e a lista de refeições.
