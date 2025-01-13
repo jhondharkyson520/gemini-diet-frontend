@@ -1,7 +1,7 @@
 import styled, { keyframes } from "styled-components";
 import iconBack from '../../assets/icons/back.svg';
 import iconUpdate from '../../assets/icons/update.svg';
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Button from "../../components/button";
 import SelectComponent from "../../components/select";

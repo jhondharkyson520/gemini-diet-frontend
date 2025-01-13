@@ -106,7 +106,7 @@ function Result() {
             doc.text("Refeições:", 20, 40);            
             let yPosition = 50;
 
-            resultDiet.data.refeicoes.forEach((snack: any, index: number) => {
+            resultDiet.data.refeicoes.forEach((snack: any) => {
                 if (yPosition > 270) {
                     doc.addPage();
                     yPosition = 20;
@@ -119,7 +119,7 @@ function Result() {
                 doc.text(`Horário: ${snack.horario}`, 20, yPosition);
                 yPosition += 10;
 
-                snack.alimentos.forEach((food: string, foodIndex: number) => {
+                snack.alimentos.forEach((food: string) => {
                     doc.setFont('helvetica', 'normal');
                     doc.text(`- ${food}`, 20, yPosition);
                     yPosition += 10;

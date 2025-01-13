@@ -4,7 +4,6 @@ import iconUpdate from '../../assets/icons/update.svg';
 import Button from '../../components/button';
 import { useNavigate } from 'react-router-dom';
 import InputComponent from '../../components/input';
-import { useState } from 'react';
 import { useDiet } from '../../context/DietContext';
 
 const ContainerMain = styled.div`
