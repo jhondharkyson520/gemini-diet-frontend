@@ -1,12 +1,13 @@
 services:
-  frontend:
+  frontenddiet:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "3000:80"
+      - "3002:81"
     environment:
       - NODE_ENV=production
+      - VITE_projectIp=${VITE_projectIp}
     restart: unless-stopped
     volumes:
       - ./logs:/var/log/nginx

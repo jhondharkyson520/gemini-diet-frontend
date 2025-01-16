@@ -7,5 +7,5 @@ RUN npm run build
 
 FROM nginx:alpine
 COPY --from=build /usr/src/diet/dist /usr/share/nginx/html
-EXPOSE 80
+EXPOSE 81
 CMD ["nginx", "-g", "daemon off;"]
