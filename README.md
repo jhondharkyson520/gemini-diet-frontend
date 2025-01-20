@@ -5,6 +5,9 @@
 
 Este projeto é o **frontend** de uma aplicação de dietas personalizadas. Ele permite que os usuários insiram seus dados e gerem planos alimentares de acordo com suas necessidades. A interface é desenvolvida com **React**, **TypeScript**, e **Vite**, e também inclui funcionalidades para gerar e exportar **PDFs** personalizados com detalhes das dietas utilizando **jsPDF**.
 
+## 🌍 **Link de Acesso**
+O frontend está hospedado na **Vercel** e pode ser acessado diretamente [aqui](https://gemini-diet-frontend.vercel.app/).
+
 ## 🚀 **Funcionalidades**
 
 - **🔄 Geração de Dietas Personalizadas**: Criação de planos alimentares com base nas informações inseridas pelo usuário.
