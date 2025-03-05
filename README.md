@@ -1,61 +1,58 @@
 
-# 🌟 **Front-End Dieta com Gemini**
+# **Front-End Dieta com Gemini**
 
-## 📝 **Descrição**
+## **Descrição**
 
 Este projeto é o **frontend** de uma aplicação de dietas personalizadas. Ele permite que os usuários insiram seus dados e gerem planos alimentares de acordo com suas necessidades. A interface é desenvolvida com **React**, **TypeScript**, e **Vite**, e também inclui funcionalidades para gerar e exportar **PDFs** personalizados com detalhes das dietas utilizando **jsPDF**.
 
-## 🌍 **Link de Acesso**
-O frontend está hospedado na **Vercel** e pode ser acessado diretamente [aqui](https://gemini-diet-frontend.vercel.app/).
+## **Funcionalidades**
 
-## 🚀 **Funcionalidades**
+- **Geração de Dietas Personalizadas**: Criação de planos alimentares com base nas informações inseridas pelo usuário.
+- **Geração de PDFs**: Permite exportar as dietas geradas como arquivos PDF formatados.
+- **Integração com API Backend**: O frontend consome a API para obter os planos alimentares personalizados.
+- **Design Responsivo**: Utiliza **Styled Components** para criar uma interface de usuário estilosa e responsiva.
 
-- **🔄 Geração de Dietas Personalizadas**: Criação de planos alimentares com base nas informações inseridas pelo usuário.
-- **📊 Geração de PDFs**: Permite exportar as dietas geradas como arquivos PDF formatados.
-- **⚙️ Integração com API Backend**: O frontend consome a API para obter os planos alimentares personalizados.
-- **🎨 Design Responsivo**: Utiliza **Styled Components** para criar uma interface de usuário estilosa e responsiva.
-
-## 🛠️ **Tecnologias Utilizadas**
+## **Tecnologias Utilizadas**
 
 - **Frontend**:
-  - 🟢 React
-  - 🟦 TypeScript
-  - ⚡ Vite
-  - 🎨 Styled Components
-  - 📜 jsPDF (para exportar PDF)
-  - 🌐 Axios (para comunicação com a API backend)
+  - React
+  - TypeScript
+  - Vite
+  - Styled Components
+  - jsPDF (para exportar PDF)
+  - Axios (para comunicação com a API backend)
 
-## 🗂️ **Estrutura do Projeto**
+## **Estrutura do Projeto**
 
-- 📂 **`src/assets`**: Contém arquivos estáticos, como ícones e imagens.
+- **`src/assets`**: Contém arquivos estáticos, como ícones e imagens.
   - **icons**: Ícones utilizados na interface.
   - **pdfImage**: Imagem usada ao gerar o PDF.
   - **logo.svg**: Logo do projeto.
 
-- 📂 **`src/components`**: Contém os componentes reutilizáveis da aplicação.
+- **`src/components`**: Contém os componentes reutilizáveis da aplicação.
   - **button**: Componente para criar botões personalizados.
   - **input**: Componente para campos de entrada de texto.
   - **select**: Componente para campos de seleção.
 
-- 📂 **`src/context`**: Gerencia o estado global da aplicação.
+- **`src/context`**: Gerencia o estado global da aplicação.
   - **DietContext.tsx**: Contexto responsável por armazenar e manipular o estado das dietas.
 
-- 📂 **`src/services`**: Contém os arquivos de comunicação com a API.
+- **`src/services`**: Contém os arquivos de comunicação com a API.
   - **api.ts**: Arquivo com funções para chamar a API.
   - **apiClient.ts**: Configuração de cliente para realizar as requisições HTTP.
 
-- 📂 **`src/view`**: Contém as telas da aplicação.
+- **`src/view`**: Contém as telas da aplicação.
   - **begin**: Tela inicial do processo de criação da dieta.
   - **finish**: Tela de finalização, onde o usuário pode visualizar o resultado.
   - **home**: Tela principal da aplicação.
   - **result**: Tela de resultados com detalhes da dieta gerada.
 
-- 📂 **`src`**:
+- **`src`**:
   - **App.tsx**: Arquivo principal da aplicação.
   - **index.css**: Arquivo de estilos globais.
   - **main.tsx**: Arquivo de entrada que renderiza o componente principal.
 
-## ⚙️ **Instalação e Execução**
+## **Instalação e Execução**
 
 1. **Clone o repositório do projeto**:
    ```bash
@@ -80,7 +77,7 @@ O frontend está hospedado na **Vercel** e pode ser acessado diretamente [aqui](
 5. **Acesse a aplicação em**:  
    `http://localhost:5173/`
 
-## 🌐 **Endpoints**
+## **Endpoints**
 
 A aplicação se comunica com a API backend para gerar os planos alimentares. Abaixo estão os endpoints usados pelo frontend:
 
