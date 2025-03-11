@@ -4,7 +4,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "3002:3002"
+      - "3002:80"
     environment:
       - NODE_ENV=production
       - VITE_projectIp=${VITE_projectIp}
